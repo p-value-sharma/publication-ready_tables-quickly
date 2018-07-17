@@ -1,59 +1,73 @@
-Data intuition and quickly producing publication-ready tables with R
+Producing publication-ready tables ... quickly and transparently creating evidence
 ========================================================
 author: Prateek Sharma
 date: 
 autosize: true
 @p-value-sharma
  
- 
-The Rift
-========================================================
 
->  It is typical to train epidemiologists to use
-regression models as their first approach to data analysis.
-Such training fosters the idea that regression modeling is
-the primary, and perhaps the only approach to use ... As a result, the rift between
-epidemiologists and their data, and more so between
-readers and the data, is growing.
+Policy Motivation 
+========================================================
+type: prompt
+
+Few novel antibiotics in the pipeline
+
+
+Policy Motivation 
+========================================================
+incremental: true
+
+"Few novel antibiotics in the pipeline, WHO warns" BMJ 2017. 
+- New drug is developed! 
+    - It actually isn't as good as current standard treatment  
+    - To get approval, drug demonstrates non-inferiority
+    - "Challenges in the design and interpretation of noninferiority trials." NEJM.
+    - Conflicts of interest and other pressure
+- Countries or international bodies are developing treatment guidelines
+    - Potential Canadian and WHO's treatment guidelines
+- Cancer drugs, pilot studies, etc. 
+
+
+What can be done 
+========================================================
+- Research is hard! **Mistakes do/will happen to talented and smart people**. 
+
+> Notice of Retraction and Replacement: Oostdijk et al. Effects of Decontamination of the Oropharynx and Intestinal Tract on Antibiotic Resistance in ICUs: A Randomized Clinical Trial. JAMA.
+
+This and other factors have to be considered when using evidence for policy
+
+- Data sharing (maybe too soon for public health)
+- Code sharing 
+- Be transparent in other ways
+
+https://www.nytimes.com/2018/07/08/health/world-health-breastfeeding-ecuador-trump.html
+
+Why tables
+========================================================
+- Tables are often required for publication
+    - Give a numerical summary for the data
+- They are often tedious and can be a time-sink 
+
+At WHO, for one project, I created 15 tables. 
+- SAS memories ... 
+- I wanted to 1) save time 2) ensure that errors could get caught
 
 * Rothman, KJ. "The growing rift between epidemiologists and their data." Eur. J. Epidemiol.
-
-Motivation
-========================================================
-* I have made a lot of tables here at WHO
-* Transparency 
-
-
-Motivating Example
-========================================================
-
-```{r echo=FALSE, fig.width=12, fig.height=5.5, fig.show='hold', fig.align='center', dpi=320}
-library(ggplot2)
-library(ggridges)
-
-set.seed(42)
-n = 10000
-
-uk <- rnorm(n = n, mean = 250, sd = 50)
-canada <- rnorm(n = n, mean = 300, sd = 30)
-us <- rnorm(n = n, mean = 400, sd = 60)
-
-ddd = c(uk, canada, us)
-
-data = data.frame(ddd, Country = rep(c('United Kingdom', 'Canada', 'United States'), each = n))
-
-ggplot(data, aes(x=ddd, y=Country, group = Country, fill=factor(..quantile..))) +
-  stat_density_ridges(geom = "density_ridges_gradient", calc_ecdf = TRUE, quantiles = 3, 
-                      quantile_lines = TRUE) +  labs(x = 'Average nursing home DDD')+
-  scale_fill_brewer(palette = 'Dark2')+
-  labs(x = 'Average nursing home DDD', fill = 'Tertile')+
-  theme_bw()
-
-```
 
 
 Let's make a table for publication 
 ========================================================
+
+
+Practical strategies to be more transparent analytic 
+========================================================
+Making  data  publicly  
+available  enhances  transparency  because  impact  results  can  be  replicated  
+and externally validated. Public access will also encourage external research-
+ers  to  conduct  additional  analysis  with  the  same  data,  which  can  provide  
+valuable information and learning for the program. When making data pub-
+licly  available,  it  is  important  to  guarantee  anonymity  to  all  research  sub-
+jects
 
 
 Examples that are improving transparency in policy
@@ -68,4 +82,4 @@ Examples that are improving transparency in policy
 If I piqued your interest
 ========================================================  
 [YouTube Lecture: Transparency and reproducibility of impact evaluation](https://youtu.be/ZgTm4E4xXts)
-
+https://www.nature.com/articles/d41586-018-02108-9
