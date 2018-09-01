@@ -1,0 +1,15 @@
+Hello Prateek,
+
+Attached is the database requested.
+
+Please note the followings,
+
+1. Time to C.difficile - please exclude cases missing date of admission when computing this
+
+2. March and April targeted surveillance cases - please only select March and April cases based on the "date of c.diff test"
+
+3. Variable albumin is not available to share
+
+Thank you
+
+Kelly

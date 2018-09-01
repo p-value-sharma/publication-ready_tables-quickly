@@ -83,15 +83,15 @@ tabcomp_age_yeargrp <- cleaned_data %>%
   ungroup() %>% 
   filter(!is.na(agegrp)) %>% 
   select(-c(Overalln, prop)) %>% 
-  mutate(characteristic = 'Age group, yr, no. (%)') %>% 
+  rename(value = n, characteristic = agegrp) %>% 
   select(characteristic, everything()) %>% 
-  rename(value = median)
+  mutate(characteristic = indent(characteristic))
+  
   
 # time to c diff test, median (q1q3)
 #  Personal communication with Choi, Kelly (PHAC/ASPC) 
 # 'Time to C.difficile - please exclude cases missing date of admission when computing this'
-
-tabcomp_age_yeargrp <- cleaned_data %>% 
+tab_comp_cdifftime <- cleaned_data %>% 
   filter(!is.na(admin_date)) %>% 
   mutate(date_diff = as.numeric(c_diff_test_date - admin_date)) %>% 
   summarise(median = median(date_diff), 
@@ -149,7 +149,9 @@ tabcomponents_combined <- add_row(tabcomp_overall_patient_count, .before = 1,
                                   characteristic = 'Year-round surveillance', value = ' ') %>% 
   bind_rows(tabcomp_gender_percentage) %>% 
   bind_rows(tabcomp_age_year_sd) %>% 
-  bind_rows(tabcomp_age_yeargrp) %>% 
+  add_row(characteristic = 'Age group, yr, no. (%)', value = ' ') %>% 
+  bind_rows(tabcomp_age_yeargrp) %>%
+  bind_rows(tab_comp_cdifftime) %>%
   add_row(characteristic = 'March and April targeted surveillance', value = ' ') %>% 
   bind_rows(tabcomp_marApr_N_cases) %>%
   add_row(characteristic = 'Clinical results', value = ' ') %>% 
