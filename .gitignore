@@ -8,6 +8,9 @@
 # Example code in package build process
 *-Ex.R
 
+# data file 
+data/CDI 2009-2015_selected variables.xlsx
+
 # Output files from R CMD build
 /*.tar.gz
 
@@ -34,3 +37,4 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+.Rproj.user
