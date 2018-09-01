@@ -22,9 +22,6 @@ indent <- function(x) {
   paste0('    ', x)
 }
 # data cleaning ####
-years_fctr_levels <- c(NA, '1920', '1929', '1956', '2007', '2008', '2009',
-                       '2010','2011', '2012', '2013', '2014', '2015')
-
 cleaned_data <- raw_data %>% 
   mutate(sex = ifelse(grepl(pattern = 'female', x = sex, ignore.case = T), 'Female', 'Male')) %>% 
   rename(admin_date = `date of admission`, c_diff_test_date = `date of c.diff test`) %>% 
@@ -32,7 +29,7 @@ cleaned_data <- raw_data %>%
   mutate(year_admin = format(admin_date, '%Y'),
          year_admin = factor(year_admin, levels = years_fctr_levels),
          month_c_diff_test = format(c_diff_test_date, format = '%b'),
-         agegrp = cut(age_final, breaks = c(18, 65, Inf), labels = c('18-64', '>65')))
+         agegrp = cut(age_final, breaks = c(0, 17, 64, Inf), labels = c('0-17', '18-64', '>65')))
 
 # study period aggregated - table components ####
 tabcomp_overall_patient_count <- cleaned_data %>% 
