@@ -27,7 +27,6 @@ cleaned_data <- raw_data %>%
   rename(admin_date = `date of admission`, c_diff_test_date = `date of c.diff test`) %>% 
   mutate_at(vars(admin_date, c_diff_test_date), funs(as.Date)) %>% 
   mutate(year_admin = format(admin_date, '%Y'),
-         year_admin = factor(year_admin, levels = years_fctr_levels),
          month_c_diff_test = format(c_diff_test_date, format = '%b'),
          agegrp = cut(age_final, breaks = c(0, 17, 64, Inf), labels = c('0-17', '18-64', '>65')))
 
@@ -132,14 +131,15 @@ tabcomp_marApr_temp <- cleaned_data %>%
 # march April, clincal results, WBC
 tabcomp_marApr_wbc <- cleaned_data %>% 
   filter(month_c_diff_test %in% c('Mar', 'Apr')) %>% 
-  summarise(mean = mean(WBC, na.rm = T), 
-            sd = sd(WBC, na.rm = T)) %>% 
+  summarise(median = median(WBC, na.rm = T), 
+            q1 = quantile(WBC, probs = 0.25, na.rm = T),
+            q3 = quantile(WBC, probs = 0.75, na.rm = T)) %>% 
   mutate_if(is.numeric, formatC, format = 'f', digits = 1) %>% 
-  mutate(mean = paste0(mean, '±', sd)) %>% 
-  select(-sd) %>% 
+  mutate(median = paste0(median, ' (', q1, '-', q3, ')')) %>% 
+  select(-contains('q')) %>% 
   mutate(characteristic = '     Leukocyte count, x109/L, median (IQR)') %>% 
   select(characteristic, everything()) %>% 
-  rename(value = mean)
+  rename(value = median)
 
 # flexTable creation ####
 tabcomponents_combined <- add_row(tabcomp_overall_patient_count, .before = 1, 
